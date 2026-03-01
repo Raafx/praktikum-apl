@@ -27,10 +27,10 @@ int main()
 
         if (username == nama && password == nim)
         {
-            int menuDipilih = 0;
+            char menuDipilih[1] = {'0'};
             cout << "\n================| LOGIN BERHASIL! |================"
                  << endl;
-            while (menuDipilih != 4)
+            while (menuDipilih[0] != '4')
             {
 
                 cout << "\nSilahkan Pilih Menu dibawah ini: " << endl
@@ -48,9 +48,9 @@ int main()
                 float centimeter;
                 char isLanjut;
 
-                switch (menuDipilih)
+                switch (menuDipilih[0])
                 {
-                case 1:
+                case '1':
 
                     cin.ignore();
                     cout << "Input Jarak dalam Meter: ";
@@ -76,12 +76,12 @@ int main()
                     }
                     else
                     {
-                        menuDipilih = 4;
+                        menuDipilih[0] = 4;
                         percobaan = 0;
                         break;
                     }
 
-                case 2:
+                case '2':
                     cin.ignore();
                     cout << "Input Jarak dalam Kilometer: ";
                     cin >> panjang;
@@ -106,12 +106,12 @@ int main()
                     }
                     else
                     {
-                        menuDipilih = 4;
+                        menuDipilih[0] = 4;
                         percobaan = 0;
                         break;
                     }
 
-                case 3:
+                case '3':
                     cin.ignore();
                     cout << "Input Jarak dalam Centimeter: ";
                     cin >> panjang;
@@ -136,12 +136,12 @@ int main()
                     }
                     else
                     {
-                        menuDipilih = 4;
+                        menuDipilih[0] = 4;
                         percobaan = 0;
                         break;
                     }
 
-                case 4:
+                case '4':
                     cin.ignore();
                     percobaan = 0;
                     break;
