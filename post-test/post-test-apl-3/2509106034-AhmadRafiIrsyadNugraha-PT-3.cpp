@@ -83,13 +83,13 @@ void isNumber(int &inputTarget, string messages)
     } while (!isValid);
 }
 
-void inputNamaKlien(Freelance *dataPesanan)
+void inputNamaKlien(Freelance &dataPesanan)
 {
     cout << "Input Nama Klien: ";
-    getline(cin, dataPesanan->namaKlien);
+    getline(cin, dataPesanan.namaKlien);
 }
 
-void inputJenisJasa(Freelance *dataPesanan)
+void inputJenisJasa(Freelance &dataPesanan)
 {
     isValid = false;
 
@@ -107,21 +107,21 @@ void inputJenisJasa(Freelance *dataPesanan)
         }
         else
         {
-            dataPesanan->jenisJasa = jenisJasa[jenisJasaDipilih - 1];
+            dataPesanan.jenisJasa = jenisJasa[jenisJasaDipilih - 1];
             isValid = true;
         }
     } while (!isValid);
 }
 
-void inputDeadline(Freelance *dataPesanan)
+void inputDeadline(Freelance &dataPesanan)
 {
     isValid = false;
     cout << "Deadline:"
          << endl;
     do
     {
-        isNumber(dataPesanan->deadline.day, "Tanggal (1-31): ");
-        if (dataPesanan->deadline.day < 1 || dataPesanan->deadline.day > 31)
+        isNumber(dataPesanan.deadline.day, "Tanggal (1-31): ");
+        if (dataPesanan.deadline.day < 1 || dataPesanan.deadline.day > 31)
         {
             cout << "Tanggal Tidak Sesuai!" << endl;
             isValid = false;
@@ -134,8 +134,8 @@ void inputDeadline(Freelance *dataPesanan)
 
     do
     {
-        isNumber(dataPesanan->deadline.month, "Bulan (1-12): ");
-        if (dataPesanan->deadline.month < 1 || dataPesanan->deadline.month > 12)
+        isNumber(dataPesanan.deadline.month, "Bulan (1-12): ");
+        if (dataPesanan.deadline.month < 1 || dataPesanan.deadline.month > 12)
         {
             cout << "Bulan Tidak Sesuai!" << endl;
             isValid = false;
@@ -148,8 +148,8 @@ void inputDeadline(Freelance *dataPesanan)
 
     do
     {
-        isNumber(dataPesanan->deadline.year, "Tahun ( >> 2025): ");
-        if (dataPesanan->deadline.year < 2026)
+        isNumber(dataPesanan.deadline.year, "Tahun ( >> 2025): ");
+        if (dataPesanan.deadline.year < 2026)
         {
             cout << "Tahun tidak sesuai!" << endl;
             isValid = false;
@@ -161,22 +161,22 @@ void inputDeadline(Freelance *dataPesanan)
     } while (!isValid);
 }
 
-void inputBudget(Freelance *dataPesanan)
+void inputBudget(Freelance &dataPesanan)
 {
-    isNumber(dataPesanan->budget, "Budget: ");
+    isNumber(dataPesanan.budget, "Budget: ");
 }
 
-void createData(int &jumlahData, Freelance *dataPesanan)
+void createData(int &jumlahData, Freelance dataPesanan[])
 {
 
     cout << "\n===========================================" << endl
          << "Silahkan Buat Data Pesaan Freelance Baru (ADMIN): \n"
          << endl;
 
-    inputNamaKlien(&dataPesanan[jumlahData]);
-    inputJenisJasa(&dataPesanan[jumlahData]);
-    inputDeadline(&dataPesanan[jumlahData]);
-    inputBudget(&dataPesanan[jumlahData]);
+    inputNamaKlien(dataPesanan[jumlahData]);
+    inputJenisJasa(dataPesanan[jumlahData]);
+    inputDeadline(dataPesanan[jumlahData]);
+    inputBudget(dataPesanan[jumlahData]);
     dataPesanan[jumlahData].statusProject = false;
     cin.ignore();
 
@@ -191,16 +191,16 @@ void createData(int &jumlahData, Freelance *dataPesanan)
     }
 }
 
-void createData(int &jumlahDataGlobal, int jumlahDataUser, Freelance *dataPesananUser)
+void createData(int &jumlahDataGlobal, int &jumlahDataUser, Freelance dataPesananUser[])
 {
     cout << "\n===========================================" << endl
          << "Silahkan Buat Data Pesaan Freelance Baru (USER): \n"
          << endl;
 
-    inputNamaKlien(&dataPesananUser[jumlahDataUser]);
-    inputJenisJasa(&dataPesananUser[jumlahDataUser]);
-    inputDeadline(&dataPesananUser[jumlahDataUser]);
-    inputBudget(&dataPesananUser[jumlahDataUser]);
+    inputNamaKlien(dataPesananUser[jumlahDataUser]);
+    inputJenisJasa(dataPesananUser[jumlahDataUser]);
+    inputDeadline(dataPesananUser[jumlahDataUser]);
+    inputBudget(dataPesananUser[jumlahDataUser]);
     dataPesananUser[jumlahDataUser].statusProject = false;
     cin.ignore();
     dataPesananFreelance[jumlahDataGlobal] = dataPesananUser[jumlahDataUser];
@@ -218,7 +218,7 @@ void createData(int &jumlahDataGlobal, int jumlahDataUser, Freelance *dataPesana
     }
 }
 
-void readData(int &jumlahData, Freelance *dataPesanan)
+void readData(int &jumlahData, Freelance dataPesanan[])
 {
     cout << "\n============================================================================================================" << endl;
     cout << left
@@ -233,19 +233,19 @@ void readData(int &jumlahData, Freelance *dataPesanan)
 
     for (int i = 0; i < jumlahData; i++)
     {
-        string statusPesanan = (dataPesanan + i)->statusProject
+        string statusPesanan = dataPesanan[i].statusProject
                                    ? "Sudah Selesai"
                                    : "Belum Selesai";
         string deadline =
-            to_string((dataPesanan + i)->deadline.day) + "-" +
-            to_string((dataPesanan + i)->deadline.month) + "-" +
-            to_string((dataPesanan + i)->deadline.year);
+            to_string(dataPesanan[i].deadline.day) + "-" +
+            to_string(dataPesanan[i].deadline.month) + "-" +
+            to_string(dataPesanan[i].deadline.year);
         cout << left
              << setw(5) << i + 1
-             << setw(20) << (dataPesanan + i)->namaKlien
-             << setw(20) << (dataPesanan + i)->jenisJasa
+             << setw(20) << dataPesanan[i].namaKlien
+             << setw(20) << dataPesanan[i].jenisJasa
              << setw(15) << deadline
-             << setw(15) << (dataPesanan + i)->budget
+             << setw(15) << dataPesanan[i].budget
              << setw(20) << statusPesanan
              << endl;
     }
@@ -254,11 +254,11 @@ void readData(int &jumlahData, Freelance *dataPesanan)
          << endl;
 }
 
-void updateData(int &jumlahData, Freelance *dataPesanan)
+void updateData(int &jumlahData)
 {
     isValid = false;
     int dataDipilih;
-    readData(jumlahData, dataPesanan);
+    readData(jumlahData, dataPesananFreelance);
 
     do
     {
@@ -292,16 +292,16 @@ void updateData(int &jumlahData, Freelance *dataPesanan)
     {
 
     case 1:
-        inputNamaKlien(&dataPesanan[dataDipilih - 1]);
+        inputNamaKlien(dataPesananFreelance[dataDipilih - 1]);
         break;
     case 2:
-        inputJenisJasa(&dataPesanan[dataDipilih - 1]);
+        inputJenisJasa(dataPesananFreelance[dataDipilih - 1]);
         break;
     case 3:
-        inputDeadline(&dataPesanan[dataDipilih - 1]);
+        inputDeadline(dataPesananFreelance[dataDipilih - 1]);
         break;
     case 4:
-        inputBudget(&dataPesanan[dataDipilih - 1]);
+        inputBudget(dataPesananFreelance[dataDipilih - 1]);
         break;
 
     case 5:
@@ -311,10 +311,10 @@ void updateData(int &jumlahData, Freelance *dataPesanan)
         switch (status)
         {
         case 'y':
-            dataPesanan[dataDipilih - 1].statusProject = true;
+            dataPesananFreelance[dataDipilih - 1].statusProject = true;
             break;
         case 'Y':
-            dataPesanan[dataDipilih - 1].statusProject = true;
+            dataPesananFreelance[dataDipilih - 1].statusProject = true;
             break;
         default:
             cin.clear();
@@ -333,15 +333,15 @@ void updateData(int &jumlahData, Freelance *dataPesanan)
 
     if (lanjut)
     {
-        updateData(jumlahData, dataPesanan);
+        updateData(jumlahData);
     }
 }
 
-void deleteData(int &jumlahData, Freelance *dataPesanan)
+void deleteData(int &jumlahData)
 {
     isValid = false;
     int dataDipilih;
-    readData(jumlahData, dataPesanan);
+    readData(jumlahData, dataPesananFreelance);
     do
     {
         cout << "Pilih Data Pesanan yang ingin dihapus: ";
@@ -357,7 +357,7 @@ void deleteData(int &jumlahData, Freelance *dataPesanan)
         {
             for (int i = dataDipilih - 1; i < jumlahData - 1; i++)
             {
-                *(dataPesanan+ i) = *(dataPesanan + (i + 1));
+                dataPesananFreelance[i] = dataPesananFreelance[i + 1];
             }
 
             jumlahData -= 1;
@@ -373,7 +373,7 @@ void deleteData(int &jumlahData, Freelance *dataPesanan)
 
     if (lanjut)
     {
-        deleteData(jumlahData,dataPesanan);
+        deleteData(jumlahData);
     }
 }
 
@@ -481,7 +481,7 @@ void menuAdmin(int &jumlahData)
             else
             {
 
-                updateData(jumlahData,dataPesananFreelance);
+                updateData(jumlahData);
             }
 
             break;
@@ -494,7 +494,7 @@ void menuAdmin(int &jumlahData)
             else
             {
 
-                deleteData(jumlahData,dataPesananFreelance);
+                deleteData(jumlahData);
             }
             break;
         case 5:
